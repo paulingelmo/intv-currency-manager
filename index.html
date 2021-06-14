@@ -10,94 +10,122 @@
   </head>
 
   <body>
-    <div ng-controller="currencyManagerController" class="container-md">
-      <form class="currency-form">
-        <div class="input-group mb-3">
-          <label class="input-group-text">Country</label>
-          <input
-            class="form-control"
-            type="text"
-            name="country"
-            ng-model="country"
-          />
-        </div>
-        <div class="input-group mb-3">
-          <label class="input-group-text">Currency Code</label>
-          <input
-            class="form-control"
-            type="text"
-            name="currency-code"
-            ng-model="currencyCode"
-          />
-        </div>
-        <div class="input-group mb-3">
-          <label class="input-group-text">Currency Symbol</label>
-          <input
-            class="form-control"
-            type="text"
-            name="currency-symbol"
-            ng-model="currencySymbol"
-          />
-        </div>
-        <div class="input-group mb-3">
-          <label class="input-group-text">Symbol Position</label>
-          <select
-            class="form-control"
-            name="symbol-position"
-            ng-model="symbolPosition"
-          >
-            <option value="start">Start</option>
-            <option value="end">End</option>
-          </select>
-        </div>
-        <div class="input-group mb-3">
-          <label class="input-group-text">Delimiter</label>
-          <select class="form-control" name="delimiter" ng-model="delimiter">
-            <option value=",">,</option>
-            <option value=".">.</option>
-          </select>
-        </div>
-        <div class="input-group mb-3">
-          <label class="input-group-text">Display Cents</label>
-          <select
-            class="form-control"
-            name="display-cents"
-            ng-model="displayCents"
-          >
-            <option value="true">True</option>
-            <option value="false">False</option>
-          </select>
-        </div>
-        <div class="input-group mb-3">
-          <button type="submit" class="btn btn-primary">Create</button>
-        </div>
-      </form>
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Country</th>
-            <th>Currency Code</th>
-            <th>Currency Symbol</th>
-            <th>Symbol Position</th>
-            <th>Delimiter</th>
-            <th>Display Cents</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="setting in currencySettings">
-            <td>{{ setting.country }}</td>
-            <td>{{ setting.currencyCode }}</td>
-            <td>{{ setting.currencySymbol }}</td>
-            <td>{{ setting.symbolPosition }}</td>
-            <td>{{ setting.delimiter }}</td>
-            <td>{{ setting.displayCents }}</td>
-            <td>Edit</td>
-            <td>Delete</td>
-          </tr>
-        </tbody>
-      </table>
+    <div ng-controller="currencyManagerController" class="container">
+      <div class="container-md">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th ng-click="sortTable('country')">Country</th>
+              <th ng-click="sortTable('currency')">Currency Code</th>
+              <th ng-click="sortTable('id')">Currency Symbol</th>
+              <th ng-click="sortTable('id')">Symbol Position</th>
+              <th ng-click="sortTable('id')">Delimiter</th>
+              <th ng-click="sortTable('id')">Display Cents</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="setting in currencySettings">
+              <td>{{ setting.country }}</td>
+              <td>{{ setting.currencyCode }}</td>
+              <td>{{ setting.currencySymbol }}</td>
+              <td>{{ setting.symbolPosition }}</td>
+              <td>{{ setting.delimiter }}</td>
+              <td>{{ setting.displayCents }}</td>
+              <td>
+                <button ngClick="" type="button" class="btn btn-secondary me-3">
+                  Edit
+                </button>
+              </td>
+              <td>
+                <button
+                  ngClick="deleteSetting(setting.id)"
+                  type="button"
+                  class="btn btn-secondary me-3"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="container-md">
+        <form class="row">
+          <div class="col-4">
+            <div class="input-group mb-3">
+              <label class="input-group-text">Country</label>
+              <input
+                class="form-control"
+                type="text"
+                name="country"
+                ng-model="country"
+              />
+            </div>
+            <div class="input-group mb-3">
+              <input
+                class="form-control"
+                type="text"
+                name="currency-code"
+                ng-model="currencyCode"
+              />
+              <label class="input-group-text">Currency Code</label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="input-group mb-3">
+              <label class="input-group-text">Currency Symbol</label>
+              <input
+                class="form-control"
+                type="text"
+                name="currency-symbol"
+                ng-model="currencySymbol"
+              />
+            </div>
+            <div class="input-group mb-3">
+              <select
+                class="form-control"
+                name="symbol-position"
+                ng-model="symbolPosition"
+              >
+                <option value="start">Start</option>
+                <option value="end">End</option>
+              </select>
+              <label class="input-group-text">Symbol Position</label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="input-group mb-3">
+              <label class="input-group-text">Delimiter</label>
+              <select
+                class="form-control"
+                name="delimiter"
+                ng-model="delimiter"
+              >
+                <option value=",">,</option>
+                <option value=".">.</option>
+              </select>
+            </div>
+            <div class="input-group mb-3">
+              <select
+                class="form-control"
+                name="display-cents"
+                ng-model="displayCents"
+              >
+                <option value="true">True</option>
+                <option value="false">False</option>
+              </select>
+              <label class="input-group-text">Display Cents</label>
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+            <button type="submit" class="btn btn-primary me-3">Create</button>
+            <button type="submit" class="btn btn-primary">Edit</button>
+          </div>
+        </form>
+      </div>
     </div>
     <script src="/node_modules/angular/angular.js"></script>
     <script src="/currencyManager.js"></script>

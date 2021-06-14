@@ -8,9 +8,18 @@ angular
         country: 'United States',
         currencyCode: 'USD',
         currencySymbol: '$',
-        symbolPosition: 'start',
+        symbolPosition: 'Start',
         delimiter: ',',
         displayCents: true
+      },
+      {
+        id: 2,
+        country: 'Argentina',
+        currencyCode: 'USD',
+        currencySymbol: '',
+        symbolPosition: 'Start',
+        delimiter: ',',
+        displayCents: false
       }
     ]
 
