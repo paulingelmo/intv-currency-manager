@@ -10,7 +10,7 @@ angular
         currencySymbol: '$',
         symbolPosition: 'start',
         delimiter: ',',
-        displayCents: true
+        displayCents: 'true'
       },
       {
         id: 2,
@@ -19,7 +19,25 @@ angular
         currencySymbol: '',
         symbolPosition: 'start',
         delimiter: ',',
-        displayCents: false
+        displayCents: 'false'
+      },
+      {
+        id: 3,
+        country: 'Spain',
+        currencyCode: '',
+        currencySymbol: '€',
+        symbolPosition: 'end',
+        delimiter: ',',
+        displayCents: 'false'
+      },
+      {
+        id: 4,
+        country: 'Germany',
+        currencyCode: '',
+        currencySymbol: '€',
+        symbolPosition: 'start',
+        delimiter: '.',
+        displayCents: 'false'
       }
     ]
 
@@ -40,7 +58,6 @@ angular
           typeof data.currencyCode === 'string'
             ? data.currencyCode.toUpperCase()
             : data.currencyCode,
-        displayCents: data.displayCents === 'true' ? true : false,
         id: incrementor
       })
       incrementor++
@@ -50,24 +67,25 @@ angular
 
     function editSetting(id, data) {
       const index = settings.findIndex((setting) => {
-        setting.id === id
+        return setting.id === id
       })
-      console.log(index, settings[index])
+
       settings[index] = {
         ...settings[index],
         ...data,
-        currencyCode: data.currencyCode.toUpperCase(),
-        displayCents: data.displayCents === 'true' ? true : false
+        currencyCode:
+          typeof data.currencyCode === 'string'
+            ? data.currencyCode.toUpperCase()
+            : data.currencyCode
       }
-      console.log(settings[index])
+
       return true
     }
 
     function deleteSetting(id) {
       const index = settings.findIndex((setting) => {
-        setting.id === id
+        return setting.id === id
       })
-      console.log(index, settings[index])
 
       settings.splice(index, 1)
 
@@ -76,6 +94,7 @@ angular
 
     function exportSettings() {
       const data = 'data:text/csv;charset=utf-8,'
+
       const header = [
         'Country',
         'Currency Code',
@@ -84,6 +103,7 @@ angular
         'Delimiter',
         'Display Cents'
       ]
+
       const csvContent =
         data +
         header +
@@ -93,6 +113,7 @@ angular
             return `${setting.country}, ${setting.currencyCode}, ${setting.currencySymbol}, ${setting.symbolPosition}, "${setting.delimiter}", ${setting.displayCents}`
           })
           .join('\n')
+
       link = document.getElementById('export-link')
       link.setAttribute('href', encodeURI(csvContent))
       link.setAttribute('download', 'currency-settings.csv')

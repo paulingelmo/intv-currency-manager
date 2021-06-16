@@ -63,7 +63,7 @@ app.controller(
       $scope.currencySymbol = undefined
       $scope.symbolPosition = 'start'
       $scope.delimiter = ','
-      $scope.displayCents = 'false'
+      $scope.displayCents = 'true'
     }
 
     $scope.sortTable = function (sortType) {
@@ -78,7 +78,6 @@ app.controller(
               ))
           break
         case 'currency':
-          console.log('currency')
           $scope.sortOrientationAscending
             ? ($scope.currencySettings = $scope.currencySettings.sort((a, b) =>
                 a.currencyCode > b.currencyCode ? 1 : -1
@@ -100,10 +99,18 @@ app.controller(
 
     $scope.setSelectedItem = function (setting) {
       $scope.selectedSetting = setting
-      $scope.formatDisplay = applySetting('1,234.56')
+
+      $scope.formatDisplay = applySetting(
+        $scope.selectedSetting &&
+          ($scope.selectedSetting.delimiter === ',' ? '1,234.56' : '1.234,56')
+      )
     }
 
     $scope.createSetting = function () {
+      if (!$scope.country) {
+        return
+      }
+
       const settingData = {
         country: $scope.country,
         currencyCode: $scope.currencyCode,
